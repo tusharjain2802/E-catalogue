@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shawl E-Catalogue 2026-2027</title>
+  <meta name="description"
+    content="Browse our exclusive collection of premium shawls, stoles and lohi — Polywool, Fine Wool, Kashmiri and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #0f0f14;
+      --surface: #16161e;
+      --surface2: #1e1e2a;
+      --border: #2a2a3a;
+      --accent: #c9a96e;
+      --accent2: #e8c987;
+      --text: #f0ede8;
+      --text-muted: #9090a8;
+      --sidebar-w: 270px;
+      --radius: 14px;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 15, 20, .88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .header-search {
+      flex: 1;
+      max-width: 360px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 16px;
+    }
+
+    .header-search input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: .88rem;
+      width: 100%;
+    }
+
+    .header-search input::placeholder {
+      color: var(--text-muted)
+    }
+
+    .header-search svg {
+      flex-shrink: 0;
+      color: var(--text-muted)
+    }
+
+    .count-badge {
+      font-size: .82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Sidebar */
+    aside {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    aside::-webkit-scrollbar {
+      width: 4px
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 99px
+    }
+
+    .sidebar-label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 12px 8px;
+    }
+
+    .cat-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: .88rem;
+      font-weight: 500;
+      padding: 9px 13px;
+      border-radius: 10px;
+      transition: background .18s, color .18s;
+      text-align: left;
+    }
+
+    .cat-btn:hover {
+      background: var(--surface2);
+      color: var(--text)
+    }
+
+    .cat-btn.active {
+      background: linear-gradient(135deg, rgba(201, 169, 110, .15), rgba(232, 201, 135, .06));
+      color: var(--accent2);
+      border: 1px solid rgba(201, 169, 110, .22);
+    }
+
+    .cat-count {
+      font-size: .7rem;
+      background: var(--surface2);
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: var(--text-muted);
+    }
+
+    /* Price filter */
+    .pf-wrap {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 14px 10px 10px;
+    }
+
+    .pf-label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pf-inputs {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .pf-input-group {
+      flex: 1;
+    }
+
+    .pf-input-group label {
+      display: block;
+      font-size: .7rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .pf-input-group input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 9px;
+      color: var(--text);
+      font-size: .82rem;
+      outline: none;
+      transition: border-color .18s;
+    }
+
+    .pf-input-group input:focus {
+      border-color: var(--accent)
+    }
+
+    /* Dual range slider */
+    .rw {
+      position: relative;
+      height: 26px;
+      margin-bottom: 5px;
+    }
+
+    .rt {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    .rf {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 99px;
+      pointer-events: none;
+    }
+
+    .rs {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .rs::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+      cursor: pointer;
+      transition: transform .15s;
+    }
+
+    .rs::-webkit-slider-thumb:hover {
+      transform: scale(1.18)
+    }
+
+    #smin {
+      z-index: 3
+    }
+
+    #smax {
+      z-index: 4
+    }
+
+    .pf-vals {
+      display: flex;
+      justify-content: space-between;
+      font-size: .76rem;
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    .reset-btn {
+      width: 100%;
+      margin-top: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 9px;
+      padding: 9px;
+      color: #111;
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: opacity .18s, transform .12s;
+    }
+
+    .reset-btn:hover {
+      opacity: .86;
+      transform: translateY(-1px)
+    }
+
+    /* Main */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 22px 20px;
+    }
+
+    main::-webkit-scrollbar {
+      width: 6px
+    }
+
+    main::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 99px
+    }
+
+    .ch {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .ch h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .ch .rc {
+      font-size: .83rem;
+      color: var(--text-muted);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 38px rgba(0, 0, 0, .55);
+      border-color: rgba(201, 169, 110, .38);
+    }
+
+    .ciw {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+
+    .ciw img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .38s ease;
+      display: block;
+    }
+
+    .card:hover .ciw img {
+      transform: scale(1.05)
+    }
+
+    .ciw .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: .8rem;
+    }
+
+    .cb {
+      padding: 11px 13px 13px;
+    }
+
+    .ca {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .ct {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .cq {
+      font-size: .76rem;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .cp {
+      font-size: 1.02rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cna {
+      font-size: .8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Empty */
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 70px 0;
+      color: var(--text-muted);
+    }
+
+    .empty svg {
+      margin: 0 auto 14px;
+      display: block;
+      opacity: .3
+    }
+
+    .empty p {
+      font-size: .95rem;
+    }
+
+    /* Lightbox */
+    #lb {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, .88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+
+    #lb.open {
+      display: flex
+    }
+
+    .lbi {
+      position: relative;
+      max-width: 92vw;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #lb-img {
+      max-width: 90vw;
+      max-height: 76vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 56px rgba(0, 0, 0, .8);
+      object-fit: contain;
+    }
+
+    #lb-cap {
+      color: var(--text);
+      font-size: .92rem;
+      text-align: center;
+      background: rgba(22, 22, 30, .82);
+      padding: 9px 22px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+
+    #lb-x {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .18s;
+    }
+
+    #lb-x:hover {
+      background: var(--border)
+    }
+
+    /* Mobile */
+    @media(max-width:750px) {
+      aside {
+        position: fixed;
+        left: 0;
+        top: 64px;
+        bottom: 0;
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform .28s;
+        width: 285px;
+      }
+
+      aside.open {
+        transform: translateX(0)
+      }
+
+      .mbt {
+        display: flex !important
+      }
+    }
+
+    .mbt {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      padding: 5px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <button class="mbt" id="mbt" aria-label="Open categories">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+    <div class="logo">&#10022; BV Jain - Wool Art E-Catalogue 2026&ndash;27</div>
+    <div class="header-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="M21 21l-4.35-4.35" />
+      </svg>
+      <input type="search" id="q" placeholder="Search art no, quality&#8230;" autocomplete="off" />
+    </div>
+    <span class="count-badge" id="cb2">0 items</span>
+  </header>
+
+  <div class="layout">
+    <aside id="sb">
+      <div class="sidebar-label">Categories</div>
+      <div id="cats"></div>
+      <div class="pf-wrap">
+        <div class="pf-label">Price Filter (MRP)</div>
+        <div class="pf-inputs">
+          <div class="pf-input-group"><label for="pmin">Min &#8377;</label><input type="number" id="pmin" /></div>
+          <div class="pf-input-group"><label for="pmax">Max &#8377;</label><input type="number" id="pmax" /></div>
+        </div>
+        <div class="rw">
+          <div class="rt"></div>
+          <div class="rf" id="rf"></div>
+          <input type="range" class="rs" id="smin" step="50" />
+          <input type="range" class="rs" id="smax" step="50" />
+        </div>
+        <div class="pf-vals"><span id="vmin"></span><span id="vmax"></span></div>
+        <button class="reset-btn" id="rbtn">Reset Filter</button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="ch">
+        <h1 id="cht">All Products</h1>
+        <span class="rc" id="rc"></span>
+      </div>
+      <div class="grid" id="grid"></div>
+    </main>
+  </div>
+
+  <div id="lb" role="dialog" aria-modal="true">
+    <div class="lbi">
+      <button id="lb-x" aria-label="Close">&times;</button>
+      <img id="lb-img" src="" alt="" />
+      <div id="lb-cap"></div>
+    </div>
+  </div>
+
+  <script>
+    const D = { "categories": { "Fine Wool Stoles": [{ "artNo": 861, "variant": "", "filename": "Art no. 861.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20861.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 862, "variant": "", "filename": "Art no. 862.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20862.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 875, "category": "Fine Wool Stoles" }, { "artNo": 866, "variant": "", "filename": "Art no. 866.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20866.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 750, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "A", "filename": "Art no.5221 A.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "B", "filename": "Art no.5221 B.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "C", "filename": "Art no.5221 C.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "Mix Designs (4)", "filename": "Art no.5221 Mix Designs (4).jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20Mix%20Designs%20(4).jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 841, "variant": "A", "filename": "Art no.841 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.841%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 841, "variant": "B", "filename": "Art no.841 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.841%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 842, "variant": "", "filename": "Art no.842.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.842.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1225, "category": "Fine Wool Stoles" }, { "artNo": 843, "variant": "", "filename": "Art no.843.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.843.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1400, "category": "Fine Wool Stoles" }, { "artNo": 844, "variant": "", "filename": "Art no.844.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.844.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1225, "category": "Fine Wool Stoles" }, { "artNo": 8451, "variant": "A", "filename": "Art no.8451 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.8451%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1125, "category": "Fine Wool Stoles" }, { "artNo": 8451, "variant": "B", "filename": "Art no.8451 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.8451%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1125, "category": "Fine Wool Stoles" }, { "artNo": 847, "variant": "odni", "filename": "Art no.847 odni.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.847%20odni.jpg", "item": "Odni", "quality": "Polywool", "mrp": 1400, "category": "Fine Wool Stoles" }, { "artNo": 852, "variant": "", "filename": "Art no.852.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.852.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 850, "category": "Fine Wool Stoles" }, { "artNo": 853, "variant": "", "filename": "Art no.853.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.853.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1775, "category": "Fine Wool Stoles" }, { "artNo": 854, "variant": "", "filename": "Art no.854.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.854.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1100, "category": "Fine Wool Stoles" }, { "artNo": 875, "variant": "A", "filename": "Art no.875 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.875%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 875, "variant": "B", "filename": "Art no.875 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.875%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 876, "variant": "", "filename": "Art no.876.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.876.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 875, "category": "Fine Wool Stoles" }, { "artNo": 878, "variant": "", "filename": "Art no.878.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.878.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 700, "category": "Fine Wool Stoles" }, { "artNo": 883, "variant": "", "filename": "Art no.883.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.883.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 925, "category": "Fine Wool Stoles" }, { "artNo": 885, "variant": "", "filename": "Art no.885.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.885.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 800, "category": "Fine Wool Stoles" }, { "artNo": 886, "variant": "", "filename": "Art no.886.jpeg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.886.jpeg", "item": "Stole", "quality": "Fine Wool", "mrp": 825, "category": "Fine Wool Stoles" }], "Fine wool shawls": [{ "artNo": 149, "variant": "", "filename": "Art no. 149.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20149.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7050, "category": "Fine wool shawls" }, { "artNo": 149, "variant": "B", "filename": "Art no. 149B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20149B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7050, "category": "Fine wool shawls" }, { "artNo": 151, "variant": "", "filename": "Art no. 151.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20151.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6700, "category": "Fine wool shawls" }, { "artNo": 151, "variant": "B", "filename": "Art no. 151B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20151B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6700, "category": "Fine wool shawls" }, { "artNo": 152, "variant": "", "filename": "Art no. 152.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20152.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6500, "category": "Fine wool shawls" }, { "artNo": 153, "variant": "", "filename": "Art no. 153.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20153.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5400, "category": "Fine wool shawls" }, { "artNo": 153, "variant": "B", "filename": "Art no. 153B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20153B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5400, "category": "Fine wool shawls" }, { "artNo": 154, "variant": "", "filename": "Art no. 154.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20154.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6100, "category": "Fine wool shawls" }, { "artNo": 801, "variant": "", "filename": "Art no. 801.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20801.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2175, "category": "Fine wool shawls" }, { "artNo": 8011, "variant": "", "filename": "Art no. 8011.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%208011.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3000, "category": "Fine wool shawls" }, { "artNo": 802, "variant": "", "filename": "Art no. 802.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20802.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4000, "category": "Fine wool shawls" }, { "artNo": 804, "variant": "", "filename": "Art no. 804.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20804.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4150, "category": "Fine wool shawls" }, { "artNo": 807, "variant": "", "filename": "Art no. 807.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20807.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1700, "category": "Fine wool shawls" }, { "artNo": 809, "variant": "", "filename": "Art no. 809.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20809.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3600, "category": "Fine wool shawls" }, { "artNo": 813, "variant": "", "filename": "Art no. 813.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20813.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5150, "category": "Fine wool shawls" }, { "artNo": 813, "variant": "B", "filename": "Art no. 813B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20813B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5150, "category": "Fine wool shawls" }, { "artNo": 814, "variant": "", "filename": "Art no. 814.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20814.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2050, "category": "Fine wool shawls" }, { "artNo": 823, "variant": "", "filename": "Art no. 823.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20823.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1475, "category": "Fine wool shawls" }, { "artNo": 824, "variant": "", "filename": "Art no. 824.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20824.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1500, "category": "Fine wool shawls" }, { "artNo": 825, "variant": "", "filename": "Art no. 825.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20825.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 827, "variant": "", "filename": "Art no. 827.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20827.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3100, "category": "Fine wool shawls" }, { "artNo": 830, "variant": "", "filename": "Art no. 830.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20830.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 9076, "variant": "", "filename": "Art no. 9076.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%209076.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2325, "category": "Fine wool shawls" }, { "artNo": 224, "variant": "", "filename": "Art no.224.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.224.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 2251, "variant": "A", "filename": "Art no.2251 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 2251, "variant": "B", "filename": "Art no.2251 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 2251, "variant": "C", "filename": "Art no.2251 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 252, "variant": "", "filename": "Art no.252.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.252.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 800, "category": "Fine wool shawls" }, { "artNo": 253, "variant": "", "filename": "Art no.253.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.253.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 575, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "A", "filename": "Art no.257 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "C", "filename": "Art no.257 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "D", "filename": "Art no.257 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "E", "filename": "Art no.257 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "F", "filename": "Art no.257 F.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20F.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "M", "filename": "Art no.257 M .jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20M%20.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "M", "filename": "Art no.257 M.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20M.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 2575, "variant": "Jari", "filename": "Art no.2575 Jari.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2575%20Jari.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 975, "category": "Fine wool shawls" }, { "artNo": 259, "variant": "", "filename": "Art no.259.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.259.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 950, "category": "Fine wool shawls" }, { "artNo": 260, "variant": "", "filename": "Art no.260.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.260.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 750, "category": "Fine wool shawls" }, { "artNo": 261, "variant": "", "filename": "Art no.261.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.261.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 264, "variant": "", "filename": "Art no.264.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.264.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 800, "category": "Fine wool shawls" }, { "artNo": 803, "variant": "", "filename": "Art no.803.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.803.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2600, "category": "Fine wool shawls" }, { "artNo": 8081, "variant": "Reversible Moonlight Shawl", "filename": "Art no.8081 Reversible Moonlight Shawl.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.8081%20Reversible%20Moonlight%20Shawl.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 950, "category": "Fine wool shawls" }, { "artNo": 811, "variant": "", "filename": "Art no.811.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.811.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1950, "category": "Fine wool shawls" }, { "artNo": 812, "variant": "", "filename": "Art no.812.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.812.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1325, "category": "Fine wool shawls" }, { "artNo": 828, "variant": "A", "filename": "Art no.828 A.JPG", "imgPath": "data/Fine%20wool%20shawls/Art%20no.828%20A.JPG", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 828, "variant": "B", "filename": "Art no.828 B.JPG", "imgPath": "data/Fine%20wool%20shawls/Art%20no.828%20B.JPG", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 831, "variant": "", "filename": "Art no.831.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.831.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2025, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "A", "filename": "Art no.834 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "B", "filename": "Art no.834 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "C", "filename": "Art no.834 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "D", "filename": "Art no.834 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "E", "filename": "Art no.834 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "F", "filename": "Art no.834 F.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20F.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "G", "filename": "Art no.834 G.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20G.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "Mix Designs", "filename": "Art no.834 Mix Designs.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20Mix%20Designs.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "A", "filename": "Art no.837 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "B", "filename": "Art no.837 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "C", "filename": "Art no.837 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "D", "filename": "Art no.837 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "E", "filename": "Art no.837 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 839, "variant": "", "filename": "Art no.839.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.839.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1250, "category": "Fine wool shawls" }, { "artNo": 9074, "variant": "", "filename": "Art no.9074.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.9074.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4450, "category": "Fine wool shawls" }, { "artNo": 9075, "variant": "Heavy Kalamkari", "filename": "Art no.9075 Heavy Kalamkari.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.9075%20Heavy%20Kalamkari.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7650, "category": "Fine wool shawls" }], "Gents": [{ "artNo": 123, "variant": "", "filename": "Art no.123.jpg", "imgPath": "data/Gents/Art%20no.123.jpg", "item": "Lohi", "quality": "Fine Wool", "mrp": 2450, "category": "Gents" }, { "artNo": 192, "variant": "", "filename": "Art no.192 .jpg", "imgPath": "data/Gents/Art%20no.192%20.jpg", "item": "Lohi", "quality": "Polywool", "mrp": 825, "category": "Gents" }, { "artNo": 194, "variant": "", "filename": "Art no.194.jpg", "imgPath": "data/Gents/Art%20no.194.jpg", "item": "Lohi", "quality": "Fine Wool", "mrp": 2025, "category": "Gents" }], "Kashmiri Shawls": [{ "artNo": 215, "variant": "", "filename": "Art no.215.jpeg", "imgPath": "data/Kashmiri%20Shawls/Art%20no.215.jpeg", "item": "Shawl", "quality": "Kashmiri", "mrp": 750, "category": "Kashmiri Shawls" }], "Polywool Shawls": [{ "artNo": 2313, "variant": "", "filename": "Art no. 2313.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202313.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 2320, "variant": "", "filename": "Art no. 2320.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202320.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2332, "variant": "", "filename": "Art no. 2332.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202332.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 2335, "variant": "", "filename": "Art no. 2335.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202335.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 2406, "variant": "", "filename": "Art no. 2406.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202406.jpg", "item": "Shawl", "quality": "Raising", "mrp": 300, "category": "Polywool Shawls" }, { "artNo": 2407, "variant": "", "filename": "Art no. 2407.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202407.jpg", "item": "Shawl", "quality": "Raising", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2441, "variant": "", "filename": "Art no. 2441.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202441.jpg", "item": "Shawl", "quality": "Raising", "mrp": 200, "category": "Polywool Shawls" }, { "artNo": 2806, "variant": "", "filename": "Art no. 2806.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202806.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2809, "variant": "", "filename": "Art no. 2809.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202809.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 175, "category": "Polywool Shawls" }, { "artNo": 2811, "variant": "", "filename": "Art no. 2811.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202811.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2812, "variant": "", "filename": "Art no. 2812.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202812.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2813, "variant": "", "filename": "Art no. 2813.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202813.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 288, "variant": "", "filename": "Art no. 288.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20288.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 200, "category": "Polywool Shawls" }, { "artNo": 417, "variant": "", "filename": "Art no. 417.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20417.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 275, "category": "Polywool Shawls" }, { "artNo": 631, "variant": "", "filename": "Art no. 631.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20631.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 750, "category": "Polywool Shawls" }, { "artNo": 632, "variant": "", "filename": "Art no. 632.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20632.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 700, "category": "Polywool Shawls" }, { "artNo": 223, "variant": "A", "filename": "Art no.223 A.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20A.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 223, "variant": "B", "filename": "Art no.223 B.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20B.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 223, "variant": "C", "filename": "Art no.223 C.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20C.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 228, "variant": "A", "filename": "Art no.228 A.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.228%20A.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 228, "variant": "B", "filename": "Art no.228 B.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.228%20B.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 2291, "variant": "B", "filename": "Art no.2291 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2291%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 450, "category": "Polywool Shawls" }, { "artNo": 2291, "variant": "", "filename": "Art no.2291.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2291.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 450, "category": "Polywool Shawls" }, { "artNo": 2313, "variant": "", "filename": "Art no.2313.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2313.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 2314, "variant": "", "filename": "Art no.2314.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2314.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 525, "category": "Polywool Shawls" }, { "artNo": 2315, "variant": "", "filename": "Art no.2315.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2315.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 600, "category": "Polywool Shawls" }, { "artNo": 2316, "variant": "", "filename": "Art no.2316.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2316.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 232, "variant": "B", "filename": "Art no.232 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.232%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 525, "category": "Polywool Shawls" }, { "artNo": 2320, "variant": "", "filename": "Art no.2320.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2320.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2334, "variant": "", "filename": "Art no.2334.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2334.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2337, "variant": "", "filename": "Art no.2337.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2337.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 650, "category": "Polywool Shawls" }, { "artNo": 234, "variant": "Softy Raising Shawl", "filename": "Art no.234 Softy Raising Shawl.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.234%20Softy%20Raising%20Shawl.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 2351, "variant": "D", "filename": "Art no.2351 D.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2351%20D.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 550, "category": "Polywool Shawls" }, { "artNo": 249, "variant": "", "filename": "Art no.249.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.249.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 400, "category": "Polywool Shawls" }, { "artNo": 269, "variant": "A", "filename": "Art no.269 A.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20A.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 269, "variant": "B", "filename": "Art no.269 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 269, "variant": "C", "filename": "Art no.269 C.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20C.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 601, "variant": "", "filename": "Art no.601.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.601.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 6011, "variant": "", "filename": "Art no.6011.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.6011.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 675, "category": "Polywool Shawls" }, { "artNo": 602, "variant": "", "filename": "Art no.602.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.602.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 6021, "variant": "", "filename": "Art no.6021.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6021.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 603, "variant": "", "filename": "Art no.603.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.603.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 605, "variant": "", "filename": "Art no.605.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.605.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 6051, "variant": "", "filename": "Art no.6051.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6051.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 650, "category": "Polywool Shawls" }, { "artNo": 607, "variant": "", "filename": "Art no.607.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.607.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 775, "category": "Polywool Shawls" }, { "artNo": 609, "variant": "", "filename": "Art no.609.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.609.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 800, "category": "Polywool Shawls" }, { "artNo": 6102, "variant": "", "filename": "Art no.6102.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6102.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 700, "category": "Polywool Shawls" }, { "artNo": 6106, "variant": "", "filename": "Art no.6106.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6106.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 626, "variant": "", "filename": "Art no.626.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.626.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1075, "category": "Polywool Shawls" }, { "artNo": 627, "variant": "", "filename": "Art no.627.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.627.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1075, "category": "Polywool Shawls" }, { "artNo": 628, "variant": "", "filename": "Art no.628.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.628.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 875, "category": "Polywool Shawls" }, { "artNo": 629, "variant": "", "filename": "Art no.629.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.629.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1025, "category": "Polywool Shawls" }, { "artNo": 630, "variant": "", "filename": "Art no.630.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.630.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 975, "category": "Polywool Shawls" }], "Polywool Stoles": [{ "artNo": 5083, "variant": "", "filename": "Art no. 5083.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.%205083.jpg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 5093, "variant": "", "filename": "Art no. 5093.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.%205093.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 502, "variant": "A", "filename": "Art no.502 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 502, "variant": "B", "filename": "Art no.502 B.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20B.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 502, "variant": "C", "filename": "Art no.502 C.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20C.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 5021, "variant": "", "filename": "Art no.5021.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5021.jpg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "A", "filename": "Art no.504 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "B", "filename": "Art no.504 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "C", "filename": "Art no.504 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 508, "variant": "", "filename": "Art no.508.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.508.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 5082, "variant": "", "filename": "Art no.5082.JPG", "imgPath": "data/Polywool%20Stoles/Art%20no.5082.JPG", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 5085, "variant": "A", "filename": "Art no.5085 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5085%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5085, "variant": "B", "filename": "Art no.5085 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5085%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5086, "variant": "", "filename": "Art no.5086.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5086.jpg", "item": "Stole", "quality": "Polywool", "mrp": 500, "category": "Polywool Stoles" }, { "artNo": 5087, "variant": "", "filename": "Art no.5087.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5087.jpg", "item": "Stole", "quality": "Polywool", "mrp": 525, "category": "Polywool Stoles" }, { "artNo": 5088, "variant": "", "filename": "Art no.5088.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5088.jpg", "item": "Stole", "quality": "Polywool", "mrp": 475, "category": "Polywool Stoles" }, { "artNo": 509, "variant": "", "filename": "Art no.509.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.509.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 5090, "variant": "", "filename": "Art no.5090.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5090.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5091, "variant": "", "filename": "Art no.5091.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.5091.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 5092, "variant": "", "filename": "Art no.5092.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5092.jpg", "item": "Stole", "quality": "Polywool", "mrp": 475, "category": "Polywool Stoles" }, { "artNo": 5093, "variant": "", "filename": "Art no.5093.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5093.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 5094, "variant": "", "filename": "Art no.5094.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5094.jpg", "item": "Stole", "quality": "Polywool", "mrp": 575, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "A", "filename": "Art no.510 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "B", "filename": "Art no.510 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "C", "filename": "Art no.510 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "D", "filename": "Art no.510 D.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20D.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "E", "filename": "Art no.510 E.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20E.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 516, "variant": "", "filename": "Art no.516.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.516.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 527, "variant": "", "filename": "Art no.527.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.527.jpg", "item": "Stole", "quality": "Polywool", "mrp": 575, "category": "Polywool Stoles" }, { "artNo": 535, "variant": "", "filename": "Art no.535.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.535.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 537, "variant": "", "filename": "Art no.537.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.537.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 539, "variant": "", "filename": "Art no.539.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.539.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 551, "variant": "", "filename": "Art no.551.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.551.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 552, "variant": "", "filename": "Art no.552.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.552.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 554, "variant": "", "filename": "Art no.554.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.554.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 556, "variant": "", "filename": "Art no.556.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.556.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Polywool Stoles" }, { "artNo": 5581, "variant": "", "filename": "Art no.5581.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5581.jpg", "item": "Stole", "quality": "Polywool", "mrp": 775, "category": "Polywool Stoles" }, { "artNo": 5582, "variant": "", "filename": "Art no.5582.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5582.jpg", "item": "Stole", "quality": "Polywool", "mrp": 850, "category": "Polywool Stoles" }, { "artNo": 5583, "variant": "", "filename": "Art no.5583.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5583.jpg", "item": "Stole", "quality": "Polywool", "mrp": 750, "category": "Polywool Stoles" }, { "artNo": 5584, "variant": "", "filename": "Art no.5584 .jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5584%20.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5584, "variant": "", "filename": "Art no.5584.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5584.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5585, "variant": "", "filename": "Art no.5585.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5585.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5586, "variant": "", "filename": "Art no.5586.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5586.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Polywool Stoles" }, { "artNo": 5587, "variant": "", "filename": "Art no.5587.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5587.jpg", "item": "Stole", "quality": "Polywool", "mrp": 675, "category": "Polywool Stoles" }, { "artNo": 5588, "variant": "", "filename": "Art no.5588.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5588.jpg", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 562, "variant": "", "filename": "Art no.562.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.562.jpg", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 573, "variant": "", "filename": "Art no.573.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.573.jpg", "item": "Stole", "quality": "Polywool", "mrp": 700, "category": "Polywool Stoles" }, { "artNo": 5774, "variant": "", "filename": "Art no.5774.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5774.jpg", "item": "Stole", "quality": "Polywool", "mrp": 750, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "A", "filename": "Art no.582 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "B", "filename": "Art no.582 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "C", "filename": "Art no.582 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "D", "filename": "Art no.582 D.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20D.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 596, "variant": "", "filename": "Art no.596.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.596.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }], "Tape Shawl & Lohi": [{ "artNo": 333, "variant": "", "filename": "Art no.333.jpg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.333.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 125, "category": "Tape Shawl & Lohi" }, { "artNo": 749, "variant": "", "filename": "Art no.749.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.749.jpeg", "item": "Lohi", "quality": "Polywool", "mrp": 525, "category": "Tape Shawl & Lohi" }, { "artNo": 750, "variant": "", "filename": "Art no.750.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.750.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 350, "category": "Tape Shawl & Lohi" }, { "artNo": 751, "variant": "", "filename": "Art no.751.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.751.jpeg", "item": "Lohi", "quality": "Polywool", "mrp": 425, "category": "Tape Shawl & Lohi" }] }, "all": [{ "artNo": 123, "variant": "", "filename": "Art no.123.jpg", "imgPath": "data/Gents/Art%20no.123.jpg", "item": "Lohi", "quality": "Fine Wool", "mrp": 2450, "category": "Gents" }, { "artNo": 149, "variant": "", "filename": "Art no. 149.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20149.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7050, "category": "Fine wool shawls" }, { "artNo": 149, "variant": "B", "filename": "Art no. 149B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20149B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7050, "category": "Fine wool shawls" }, { "artNo": 151, "variant": "", "filename": "Art no. 151.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20151.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6700, "category": "Fine wool shawls" }, { "artNo": 151, "variant": "B", "filename": "Art no. 151B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20151B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6700, "category": "Fine wool shawls" }, { "artNo": 152, "variant": "", "filename": "Art no. 152.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20152.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6500, "category": "Fine wool shawls" }, { "artNo": 153, "variant": "", "filename": "Art no. 153.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20153.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5400, "category": "Fine wool shawls" }, { "artNo": 153, "variant": "B", "filename": "Art no. 153B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20153B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5400, "category": "Fine wool shawls" }, { "artNo": 154, "variant": "", "filename": "Art no. 154.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20154.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 6100, "category": "Fine wool shawls" }, { "artNo": 192, "variant": "", "filename": "Art no.192 .jpg", "imgPath": "data/Gents/Art%20no.192%20.jpg", "item": "Lohi", "quality": "Polywool", "mrp": 825, "category": "Gents" }, { "artNo": 194, "variant": "", "filename": "Art no.194.jpg", "imgPath": "data/Gents/Art%20no.194.jpg", "item": "Lohi", "quality": "Fine Wool", "mrp": 2025, "category": "Gents" }, { "artNo": 215, "variant": "", "filename": "Art no.215.jpeg", "imgPath": "data/Kashmiri%20Shawls/Art%20no.215.jpeg", "item": "Shawl", "quality": "Kashmiri", "mrp": 750, "category": "Kashmiri Shawls" }, { "artNo": 223, "variant": "A", "filename": "Art no.223 A.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20A.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 223, "variant": "B", "filename": "Art no.223 B.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20B.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 223, "variant": "C", "filename": "Art no.223 C.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.223%20C.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 224, "variant": "", "filename": "Art no.224.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.224.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 228, "variant": "A", "filename": "Art no.228 A.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.228%20A.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 228, "variant": "B", "filename": "Art no.228 B.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.228%20B.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 232, "variant": "B", "filename": "Art no.232 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.232%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 525, "category": "Polywool Shawls" }, { "artNo": 234, "variant": "Softy Raising Shawl", "filename": "Art no.234 Softy Raising Shawl.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.234%20Softy%20Raising%20Shawl.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 249, "variant": "", "filename": "Art no.249.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.249.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 400, "category": "Polywool Shawls" }, { "artNo": 252, "variant": "", "filename": "Art no.252.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.252.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 800, "category": "Fine wool shawls" }, { "artNo": 253, "variant": "", "filename": "Art no.253.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.253.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 575, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "A", "filename": "Art no.257 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "C", "filename": "Art no.257 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "D", "filename": "Art no.257 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "E", "filename": "Art no.257 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "F", "filename": "Art no.257 F.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20F.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "M", "filename": "Art no.257 M .jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20M%20.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 257, "variant": "M", "filename": "Art no.257 M.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.257%20M.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 725, "category": "Fine wool shawls" }, { "artNo": 259, "variant": "", "filename": "Art no.259.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.259.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 950, "category": "Fine wool shawls" }, { "artNo": 260, "variant": "", "filename": "Art no.260.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.260.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 750, "category": "Fine wool shawls" }, { "artNo": 261, "variant": "", "filename": "Art no.261.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.261.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 264, "variant": "", "filename": "Art no.264.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.264.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 800, "category": "Fine wool shawls" }, { "artNo": 269, "variant": "A", "filename": "Art no.269 A.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20A.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 269, "variant": "B", "filename": "Art no.269 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 269, "variant": "C", "filename": "Art no.269 C.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.269%20C.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 425, "category": "Polywool Shawls" }, { "artNo": 288, "variant": "", "filename": "Art no. 288.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20288.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 200, "category": "Polywool Shawls" }, { "artNo": 333, "variant": "", "filename": "Art no.333.jpg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.333.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 125, "category": "Tape Shawl & Lohi" }, { "artNo": 417, "variant": "", "filename": "Art no. 417.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20417.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 275, "category": "Polywool Shawls" }, { "artNo": 502, "variant": "A", "filename": "Art no.502 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 502, "variant": "B", "filename": "Art no.502 B.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20B.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 502, "variant": "C", "filename": "Art no.502 C.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.502%20C.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 400, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "A", "filename": "Art no.504 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "B", "filename": "Art no.504 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 504, "variant": "C", "filename": "Art no.504 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.504%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 508, "variant": "", "filename": "Art no.508.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.508.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 509, "variant": "", "filename": "Art no.509.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.509.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "A", "filename": "Art no.510 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "B", "filename": "Art no.510 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "C", "filename": "Art no.510 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "D", "filename": "Art no.510 D.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20D.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 510, "variant": "E", "filename": "Art no.510 E.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.510%20E.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 516, "variant": "", "filename": "Art no.516.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.516.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 527, "variant": "", "filename": "Art no.527.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.527.jpg", "item": "Stole", "quality": "Polywool", "mrp": 575, "category": "Polywool Stoles" }, { "artNo": 535, "variant": "", "filename": "Art no.535.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.535.jpg", "item": "Stole", "quality": "Polywool", "mrp": 350, "category": "Polywool Stoles" }, { "artNo": 537, "variant": "", "filename": "Art no.537.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.537.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 539, "variant": "", "filename": "Art no.539.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.539.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 551, "variant": "", "filename": "Art no.551.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.551.jpg", "item": "Stole", "quality": "Polywool", "mrp": 300, "category": "Polywool Stoles" }, { "artNo": 552, "variant": "", "filename": "Art no.552.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.552.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 554, "variant": "", "filename": "Art no.554.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.554.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 556, "variant": "", "filename": "Art no.556.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.556.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Polywool Stoles" }, { "artNo": 562, "variant": "", "filename": "Art no.562.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.562.jpg", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 573, "variant": "", "filename": "Art no.573.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.573.jpg", "item": "Stole", "quality": "Polywool", "mrp": 700, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "A", "filename": "Art no.582 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "B", "filename": "Art no.582 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "C", "filename": "Art no.582 C.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 582, "variant": "D", "filename": "Art no.582 D.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.582%20D.jpg", "item": "Stole", "quality": "Polywool", "mrp": 325, "category": "Polywool Stoles" }, { "artNo": 596, "variant": "", "filename": "Art no.596.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.596.jpg", "item": "Stole", "quality": "Polywool", "mrp": 275, "category": "Polywool Stoles" }, { "artNo": 601, "variant": "", "filename": "Art no.601.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.601.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 602, "variant": "", "filename": "Art no.602.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.602.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 603, "variant": "", "filename": "Art no.603.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.603.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 605, "variant": "", "filename": "Art no.605.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.605.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 607, "variant": "", "filename": "Art no.607.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.607.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 775, "category": "Polywool Shawls" }, { "artNo": 609, "variant": "", "filename": "Art no.609.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.609.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 800, "category": "Polywool Shawls" }, { "artNo": 626, "variant": "", "filename": "Art no.626.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.626.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1075, "category": "Polywool Shawls" }, { "artNo": 627, "variant": "", "filename": "Art no.627.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.627.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1075, "category": "Polywool Shawls" }, { "artNo": 628, "variant": "", "filename": "Art no.628.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.628.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 875, "category": "Polywool Shawls" }, { "artNo": 629, "variant": "", "filename": "Art no.629.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.629.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 1025, "category": "Polywool Shawls" }, { "artNo": 630, "variant": "", "filename": "Art no.630.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.630.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 975, "category": "Polywool Shawls" }, { "artNo": 631, "variant": "", "filename": "Art no. 631.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20631.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 750, "category": "Polywool Shawls" }, { "artNo": 632, "variant": "", "filename": "Art no. 632.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%20632.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 700, "category": "Polywool Shawls" }, { "artNo": 749, "variant": "", "filename": "Art no.749.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.749.jpeg", "item": "Lohi", "quality": "Polywool", "mrp": 525, "category": "Tape Shawl & Lohi" }, { "artNo": 750, "variant": "", "filename": "Art no.750.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.750.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 350, "category": "Tape Shawl & Lohi" }, { "artNo": 751, "variant": "", "filename": "Art no.751.jpeg", "imgPath": "data/Tape%20Shawl%20&%20Lohi/Art%20no.751.jpeg", "item": "Lohi", "quality": "Polywool", "mrp": 425, "category": "Tape Shawl & Lohi" }, { "artNo": 801, "variant": "", "filename": "Art no. 801.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20801.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2175, "category": "Fine wool shawls" }, { "artNo": 802, "variant": "", "filename": "Art no. 802.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20802.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4000, "category": "Fine wool shawls" }, { "artNo": 803, "variant": "", "filename": "Art no.803.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.803.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2600, "category": "Fine wool shawls" }, { "artNo": 804, "variant": "", "filename": "Art no. 804.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20804.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4150, "category": "Fine wool shawls" }, { "artNo": 807, "variant": "", "filename": "Art no. 807.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20807.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1700, "category": "Fine wool shawls" }, { "artNo": 809, "variant": "", "filename": "Art no. 809.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20809.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3600, "category": "Fine wool shawls" }, { "artNo": 811, "variant": "", "filename": "Art no.811.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.811.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1950, "category": "Fine wool shawls" }, { "artNo": 812, "variant": "", "filename": "Art no.812.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.812.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1325, "category": "Fine wool shawls" }, { "artNo": 813, "variant": "", "filename": "Art no. 813.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20813.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5150, "category": "Fine wool shawls" }, { "artNo": 813, "variant": "B", "filename": "Art no. 813B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20813B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 5150, "category": "Fine wool shawls" }, { "artNo": 814, "variant": "", "filename": "Art no. 814.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20814.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2050, "category": "Fine wool shawls" }, { "artNo": 823, "variant": "", "filename": "Art no. 823.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20823.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1475, "category": "Fine wool shawls" }, { "artNo": 824, "variant": "", "filename": "Art no. 824.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20824.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1500, "category": "Fine wool shawls" }, { "artNo": 825, "variant": "", "filename": "Art no. 825.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20825.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 827, "variant": "", "filename": "Art no. 827.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20827.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3100, "category": "Fine wool shawls" }, { "artNo": 828, "variant": "A", "filename": "Art no.828 A.JPG", "imgPath": "data/Fine%20wool%20shawls/Art%20no.828%20A.JPG", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 828, "variant": "B", "filename": "Art no.828 B.JPG", "imgPath": "data/Fine%20wool%20shawls/Art%20no.828%20B.JPG", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 830, "variant": "", "filename": "Art no. 830.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%20830.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1575, "category": "Fine wool shawls" }, { "artNo": 831, "variant": "", "filename": "Art no.831.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.831.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2025, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "A", "filename": "Art no.834 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "B", "filename": "Art no.834 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "C", "filename": "Art no.834 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "D", "filename": "Art no.834 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "E", "filename": "Art no.834 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "F", "filename": "Art no.834 F.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20F.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "G", "filename": "Art no.834 G.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20G.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 834, "variant": "Mix Designs", "filename": "Art no.834 Mix Designs.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.834%20Mix%20Designs.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1625, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "A", "filename": "Art no.837 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "B", "filename": "Art no.837 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "C", "filename": "Art no.837 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "D", "filename": "Art no.837 D.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20D.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 837, "variant": "E", "filename": "Art no.837 E.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.837%20E.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1550, "category": "Fine wool shawls" }, { "artNo": 839, "variant": "", "filename": "Art no.839.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.839.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 1250, "category": "Fine wool shawls" }, { "artNo": 841, "variant": "A", "filename": "Art no.841 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.841%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 841, "variant": "B", "filename": "Art no.841 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.841%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 842, "variant": "", "filename": "Art no.842.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.842.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1225, "category": "Fine Wool Stoles" }, { "artNo": 843, "variant": "", "filename": "Art no.843.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.843.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1400, "category": "Fine Wool Stoles" }, { "artNo": 844, "variant": "", "filename": "Art no.844.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.844.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1225, "category": "Fine Wool Stoles" }, { "artNo": 847, "variant": "odni", "filename": "Art no.847 odni.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.847%20odni.jpg", "item": "Odni", "quality": "Polywool", "mrp": 1400, "category": "Fine Wool Stoles" }, { "artNo": 852, "variant": "", "filename": "Art no.852.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.852.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 850, "category": "Fine Wool Stoles" }, { "artNo": 853, "variant": "", "filename": "Art no.853.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.853.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1775, "category": "Fine Wool Stoles" }, { "artNo": 854, "variant": "", "filename": "Art no.854.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.854.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 1100, "category": "Fine Wool Stoles" }, { "artNo": 861, "variant": "", "filename": "Art no. 861.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20861.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 862, "variant": "", "filename": "Art no. 862.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20862.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 875, "category": "Fine Wool Stoles" }, { "artNo": 866, "variant": "", "filename": "Art no. 866.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.%20866.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 750, "category": "Fine Wool Stoles" }, { "artNo": 875, "variant": "A", "filename": "Art no.875 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.875%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 875, "variant": "B", "filename": "Art no.875 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.875%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1075, "category": "Fine Wool Stoles" }, { "artNo": 876, "variant": "", "filename": "Art no.876.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.876.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 875, "category": "Fine Wool Stoles" }, { "artNo": 878, "variant": "", "filename": "Art no.878.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.878.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 700, "category": "Fine Wool Stoles" }, { "artNo": 883, "variant": "", "filename": "Art no.883.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.883.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 925, "category": "Fine Wool Stoles" }, { "artNo": 885, "variant": "", "filename": "Art no.885.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.885.jpg", "item": "Stole", "quality": "Fine Wool", "mrp": 800, "category": "Fine Wool Stoles" }, { "artNo": 886, "variant": "", "filename": "Art no.886.jpeg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.886.jpeg", "item": "Stole", "quality": "Fine Wool", "mrp": 825, "category": "Fine Wool Stoles" }, { "artNo": 2251, "variant": "A", "filename": "Art no.2251 A.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20A.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 2251, "variant": "B", "filename": "Art no.2251 B.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20B.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 2251, "variant": "C", "filename": "Art no.2251 C.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2251%20C.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 925, "category": "Fine wool shawls" }, { "artNo": 2291, "variant": "", "filename": "Art no.2291.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2291.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 450, "category": "Polywool Shawls" }, { "artNo": 2291, "variant": "B", "filename": "Art no.2291 B.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2291%20B.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 450, "category": "Polywool Shawls" }, { "artNo": 2313, "variant": "", "filename": "Art no. 2313.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202313.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 2313, "variant": "", "filename": "Art no.2313.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2313.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 2314, "variant": "", "filename": "Art no.2314.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2314.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 525, "category": "Polywool Shawls" }, { "artNo": 2315, "variant": "", "filename": "Art no.2315.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2315.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 600, "category": "Polywool Shawls" }, { "artNo": 2316, "variant": "", "filename": "Art no.2316.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2316.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 725, "category": "Polywool Shawls" }, { "artNo": 2320, "variant": "", "filename": "Art no. 2320.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202320.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2320, "variant": "", "filename": "Art no.2320.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2320.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2332, "variant": "", "filename": "Art no. 2332.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202332.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 500, "category": "Polywool Shawls" }, { "artNo": 2334, "variant": "", "filename": "Art no.2334.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2334.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 2335, "variant": "", "filename": "Art no. 2335.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202335.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 375, "category": "Polywool Shawls" }, { "artNo": 2337, "variant": "", "filename": "Art no.2337.jpeg", "imgPath": "data/Polywool%20Shawls/Art%20no.2337.jpeg", "item": "Shawl", "quality": "Polywool", "mrp": 650, "category": "Polywool Shawls" }, { "artNo": 2351, "variant": "D", "filename": "Art no.2351 D.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.2351%20D.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 550, "category": "Polywool Shawls" }, { "artNo": 2406, "variant": "", "filename": "Art no. 2406.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202406.jpg", "item": "Shawl", "quality": "Raising", "mrp": 300, "category": "Polywool Shawls" }, { "artNo": 2407, "variant": "", "filename": "Art no. 2407.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202407.jpg", "item": "Shawl", "quality": "Raising", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2441, "variant": "", "filename": "Art no. 2441.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202441.jpg", "item": "Shawl", "quality": "Raising", "mrp": 200, "category": "Polywool Shawls" }, { "artNo": 2575, "variant": "Jari", "filename": "Art no.2575 Jari.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.2575%20Jari.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 975, "category": "Fine wool shawls" }, { "artNo": 2806, "variant": "", "filename": "Art no. 2806.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202806.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2809, "variant": "", "filename": "Art no. 2809.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202809.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 175, "category": "Polywool Shawls" }, { "artNo": 2811, "variant": "", "filename": "Art no. 2811.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202811.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2812, "variant": "", "filename": "Art no. 2812.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202812.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 2813, "variant": "", "filename": "Art no. 2813.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.%202813.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 225, "category": "Polywool Shawls" }, { "artNo": 5021, "variant": "", "filename": "Art no.5021.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5021.jpg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 5082, "variant": "", "filename": "Art no.5082.JPG", "imgPath": "data/Polywool%20Stoles/Art%20no.5082.JPG", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 5083, "variant": "", "filename": "Art no. 5083.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.%205083.jpg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 5085, "variant": "A", "filename": "Art no.5085 A.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5085%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5085, "variant": "B", "filename": "Art no.5085 B.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5085%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5086, "variant": "", "filename": "Art no.5086.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5086.jpg", "item": "Stole", "quality": "Polywool", "mrp": 500, "category": "Polywool Stoles" }, { "artNo": 5087, "variant": "", "filename": "Art no.5087.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5087.jpg", "item": "Stole", "quality": "Polywool", "mrp": 525, "category": "Polywool Stoles" }, { "artNo": 5088, "variant": "", "filename": "Art no.5088.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5088.jpg", "item": "Stole", "quality": "Polywool", "mrp": 475, "category": "Polywool Stoles" }, { "artNo": 5090, "variant": "", "filename": "Art no.5090.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5090.jpg", "item": "Stole", "quality": "Polywool", "mrp": 425, "category": "Polywool Stoles" }, { "artNo": 5091, "variant": "", "filename": "Art no.5091.jpeg", "imgPath": "data/Polywool%20Stoles/Art%20no.5091.jpeg", "item": "Stole", "quality": "Polywool", "mrp": 450, "category": "Polywool Stoles" }, { "artNo": 5092, "variant": "", "filename": "Art no.5092.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5092.jpg", "item": "Stole", "quality": "Polywool", "mrp": 475, "category": "Polywool Stoles" }, { "artNo": 5093, "variant": "", "filename": "Art no. 5093.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.%205093.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 5093, "variant": "", "filename": "Art no.5093.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5093.jpg", "item": "Stole", "quality": "Polywool", "mrp": 375, "category": "Polywool Stoles" }, { "artNo": 5094, "variant": "", "filename": "Art no.5094.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5094.jpg", "item": "Stole", "quality": "Polywool", "mrp": 575, "category": "Polywool Stoles" }, { "artNo": 5221, "variant": "A", "filename": "Art no.5221 A.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20A.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "B", "filename": "Art no.5221 B.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20B.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "C", "filename": "Art no.5221 C.jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20C.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5221, "variant": "Mix Designs (4)", "filename": "Art no.5221 Mix Designs (4).jpg", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.5221%20Mix%20Designs%20(4).jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Fine Wool Stoles" }, { "artNo": 5581, "variant": "", "filename": "Art no.5581.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5581.jpg", "item": "Stole", "quality": "Polywool", "mrp": 775, "category": "Polywool Stoles" }, { "artNo": 5582, "variant": "", "filename": "Art no.5582.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5582.jpg", "item": "Stole", "quality": "Polywool", "mrp": 850, "category": "Polywool Stoles" }, { "artNo": 5583, "variant": "", "filename": "Art no.5583.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5583.jpg", "item": "Stole", "quality": "Polywool", "mrp": 750, "category": "Polywool Stoles" }, { "artNo": 5584, "variant": "", "filename": "Art no.5584 .jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5584%20.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5584, "variant": "", "filename": "Art no.5584.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5584.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5585, "variant": "", "filename": "Art no.5585.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5585.jpg", "item": "Stole", "quality": "Polywool", "mrp": 600, "category": "Polywool Stoles" }, { "artNo": 5586, "variant": "", "filename": "Art no.5586.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5586.jpg", "item": "Stole", "quality": "Polywool", "mrp": 650, "category": "Polywool Stoles" }, { "artNo": 5587, "variant": "", "filename": "Art no.5587.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5587.jpg", "item": "Stole", "quality": "Polywool", "mrp": 675, "category": "Polywool Stoles" }, { "artNo": 5588, "variant": "", "filename": "Art no.5588.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5588.jpg", "item": "Stole", "quality": "Polywool", "mrp": 625, "category": "Polywool Stoles" }, { "artNo": 5774, "variant": "", "filename": "Art no.5774.jpg", "imgPath": "data/Polywool%20Stoles/Art%20no.5774.jpg", "item": "Stole", "quality": "Polywool", "mrp": 750, "category": "Polywool Stoles" }, { "artNo": 6011, "variant": "", "filename": "Art no.6011.JPG", "imgPath": "data/Polywool%20Shawls/Art%20no.6011.JPG", "item": "Shawl", "quality": "Polywool", "mrp": 675, "category": "Polywool Shawls" }, { "artNo": 6021, "variant": "", "filename": "Art no.6021.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6021.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 625, "category": "Polywool Shawls" }, { "artNo": 6051, "variant": "", "filename": "Art no.6051.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6051.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 650, "category": "Polywool Shawls" }, { "artNo": 6102, "variant": "", "filename": "Art no.6102.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6102.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 700, "category": "Polywool Shawls" }, { "artNo": 6106, "variant": "", "filename": "Art no.6106.jpg", "imgPath": "data/Polywool%20Shawls/Art%20no.6106.jpg", "item": "Shawl", "quality": "Polywool", "mrp": 575, "category": "Polywool Shawls" }, { "artNo": 8011, "variant": "", "filename": "Art no. 8011.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%208011.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 3000, "category": "Fine wool shawls" }, { "artNo": 8081, "variant": "Reversible Moonlight Shawl", "filename": "Art no.8081 Reversible Moonlight Shawl.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.8081%20Reversible%20Moonlight%20Shawl.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 950, "category": "Fine wool shawls" }, { "artNo": 8451, "variant": "A", "filename": "Art no.8451 A.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.8451%20A.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1125, "category": "Fine Wool Stoles" }, { "artNo": 8451, "variant": "B", "filename": "Art no.8451 B.JPG", "imgPath": "data/Fine%20Wool%20Stoles/Art%20no.8451%20B.JPG", "item": "Stole", "quality": "Fine Wool", "mrp": 1125, "category": "Fine Wool Stoles" }, { "artNo": 9074, "variant": "", "filename": "Art no.9074.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.9074.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 4450, "category": "Fine wool shawls" }, { "artNo": 9075, "variant": "Heavy Kalamkari", "filename": "Art no.9075 Heavy Kalamkari.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.9075%20Heavy%20Kalamkari.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 7650, "category": "Fine wool shawls" }, { "artNo": 9076, "variant": "", "filename": "Art no. 9076.jpg", "imgPath": "data/Fine%20wool%20shawls/Art%20no.%209076.jpg", "item": "Shawl", "quality": "Fine Wool", "mrp": 2325, "category": "Fine wool shawls" }], "mrpMin": 125, "mrpMax": 7650 };
+    const GMIN = D.mrpMin, GMAX = D.mrpMax;
+    let activeCat = "All", fmin = GMIN, fmax = GMAX, sq = "";
+
+    // Categories
+    const catNames = ["All", ...Object.keys(D.categories).sort()];
+    const catsEl = document.getElementById("cats");
+    function getCnt(n) { return n === "All" ? D.all.length : (D.categories[n] || []).length; }
+    function buildCats() {
+      catsEl.innerHTML = "";
+      catNames.forEach(n => {
+        const b = document.createElement("button");
+        b.className = "cat-btn" + (n === activeCat ? " active" : "");
+        b.dataset.c = n;
+        b.innerHTML = `<span>${n}</span><span class="cat-count">${getCnt(n)}</span>`;
+        b.onclick = () => { activeCat = n; document.getElementById("sb").classList.remove("open"); render(); };
+        catsEl.appendChild(b);
+      });
+    }
+
+    // Sliders
+    const smin = document.getElementById("smin"), smax = document.getElementById("smax");
+    const rf = document.getElementById("rf"), vmin = document.getElementById("vmin"), vmax = document.getElementById("vmax");
+    const pmin = document.getElementById("pmin"), pmax = document.getElementById("pmax");
+    function ini() { smin.min = smax.min = pmin.min = pmax.min = GMIN; smin.max = smax.max = pmin.max = pmax.max = GMAX; smin.value = GMIN; smax.value = GMAX; pmin.value = GMIN; pmax.value = GMAX; }
+    ini();
+    function fmt(n) { return "\u20b9" + n.toLocaleString("en-IN"); }
+    function fill() {
+      const mn = +smin.value, mx = +smax.value, r = GMAX - GMIN;
+      rf.style.left = ((mn - GMIN) / r * 100) + "%";
+      rf.style.right = ((GMAX - mx) / r * 100) + "%";
+      vmin.textContent = fmt(mn); vmax.textContent = fmt(mx);
+      pmin.value = mn; pmax.value = mx;
+    }
+    fill();
+    smin.oninput = () => { if (+smin.value > +smax.value) smin.value = smax.value; fmin = +smin.value; fmax = +smax.value; fill(); render(); };
+    smax.oninput = () => { if (+smax.value < +smin.value) smax.value = smin.value; fmin = +smin.value; fmax = +smax.value; fill(); render(); };
+    pmin.onchange = () => { let v = Math.max(GMIN, Math.min(+pmin.value || GMIN, fmax)); smin.value = v; fmin = v; fill(); render(); };
+    pmax.onchange = () => { let v = Math.min(GMAX, Math.max(+pmax.value || GMAX, fmin)); smax.value = v; fmax = v; fill(); render(); };
+    document.getElementById("rbtn").onclick = () => { fmin = GMIN; fmax = GMAX; smin.value = GMIN; smax.value = GMAX; fill(); render(); };
+
+    // Search
+    document.getElementById("q").oninput = e => { sq = e.target.value.trim().toLowerCase(); render(); };
+
+    // Render
+    const grid = document.getElementById("grid"), cht = document.getElementById("cht"), rc = document.getElementById("rc"), cb2 = document.getElementById("cb2");
+    function mkLabel(p) { const s = p.variant ? " " + p.variant : ""; return `Art no. ${p.artNo}${s} (${p.item || "Shawl"})`; }
+    function render() {
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.toggle("active", b.dataset.c === activeCat));
+      cht.textContent = activeCat === "All" ? "All Products" : activeCat;
+      let prods = activeCat === "All" ? D.all : (D.categories[activeCat] || []);
+      prods = prods.filter(p => p.mrp === 0 || (p.mrp >= fmin && p.mrp <= fmax));
+      if (sq) prods = prods.filter(p => {
+        const h = ["art no " + p.artNo, p.artNo + "", p.variant || "", p.item || "", p.quality || "", p.filename || ""].join(" ").toLowerCase();
+        return h.includes(sq);
+      });
+      rc.textContent = prods.length + " items"; cb2.textContent = prods.length + " items";
+      if (!prods.length) {
+        grid.innerHTML = `<div class="empty"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg><p>No products match your filter.</p></div>`;
+        return;
+      }
+      grid.innerHTML = prods.map((p, i) => {
+        const s = p.variant ? " " + p.variant : "";
+        const price = p.mrp > 0 ? `<div class="cp">&#8377; ${p.mrp.toLocaleString("en-IN")}</div>` : `<div class="cna">Price on request</div>`;
+        return `<div class="card" data-i="${i}" tabindex="0" role="button">
+      <div class="ciw"><img src="${p.imgPath}" alt="${mkLabel(p)}" loading="lazy" onerror="this.outerHTML='<div class=placeholder>Image not found</div>'"/></div>
+      <div class="cb">
+        <div class="ca">Art no. ${p.artNo}${s}</div>
+        <div class="ct">${p.item || "Shawl"}${s ? " &mdash; " + s : ""}</div>
+        <div class="cq">${p.quality || ""}</div>
+        ${price}
+      </div>
+    </div>`;
+      }).join("");
+      grid.querySelectorAll(".card").forEach((c, i) => {
+        const p = prods[i];
+        c.onclick = () => openLb(p);
+        c.onkeydown = e => { if (e.key === "Enter" || e.key === " ") openLb(p); };
+      });
+    }
+
+    // Lightbox
+    const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img"), lbCap = document.getElementById("lb-cap");
+    function openLb(p) {
+      const s = p.variant ? " " + p.variant : "";
+      lbImg.src = p.imgPath; lbImg.alt = mkLabel(p);
+      const pr = p.mrp > 0 ? "  \u20b9" + p.mrp.toLocaleString("en-IN") : "Price on request";
+      lbCap.textContent = `Art no. ${p.artNo}${s} (${p.item || "Shawl"}) — ${p.quality || ""}  •  ${pr}`;
+      lb.classList.add("open"); document.body.style.overflow = "hidden";
+    }
+    function closeLb() { lb.classList.remove("open"); lbImg.src = ""; document.body.style.overflow = ""; }
+    document.getElementById("lb-x").onclick = closeLb;
+    lb.onclick = e => { if (e.target === lb) closeLb(); };
+    document.onkeydown = e => { if (e.key === "Escape") closeLb(); };
+
+    // Mobile
+    document.getElementById("mbt").onclick = () => document.getElementById("sb").classList.toggle("open");
+
+    buildCats(); render();
+  </script>
+</body>
+
+</html>
